@@ -2,7 +2,7 @@
 	"name": "dfo-login",
 	"module": "index.ts",
 	"bin": {
-		"dfo-login": "./index.ts"
+		"dfo-login": "index.ts"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.4.16",
@@ -19,5 +19,6 @@
 		"index.ts",
 		"src",
 		"README.md"
-	]
+	],
+	"version": "0.1.0"
 }
