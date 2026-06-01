@@ -1,5 +1,8 @@
 {
-	"permissions": {
-		"allow": []
-	}
+  "permissions": {
+    "allow": [
+      "Bash(npm whoami *)",
+      "Bash(npm config *)"
+    ]
+  }
 }

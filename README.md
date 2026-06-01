@@ -1,6 +1,27 @@
-# open-dfo-login
+# dfo-login
 
 A [Bun](https://bun.com)-powered CLI for managing accounts on a private DFO server: configure the database, register accounts, log in, and produce a game-client login token.
+
+## Quick start (no install)
+
+If you only have [Bun](https://bun.com) installed, you can run the latest published version directly — no clone, no `bun install`:
+
+```bash
+bunx dfo-login --help        # show help
+bunx dfo-login init          # configure DB connection + paste RSA private key
+bunx dfo-login signup        # register a new account
+bunx dfo-login login         # log in, print the game token, cache it
+bunx dfo-login lookup        # list cached account names
+bunx dfo-login lookup <name> # print the cached token for <name>
+```
+
+Pin a specific version if you want reproducible behavior:
+
+```bash
+bunx dfo-login@0.1.0 login
+```
+
+The first run will create `~/.dfo-login/` for the config, private key, and token cache.
 
 ## Requirements
 
@@ -8,24 +29,12 @@ A [Bun](https://bun.com)-powered CLI for managing accounts on a private DFO serv
 - A MySQL instance with the `d_taiwan`, `taiwan_login`, `taiwan_billing`, and `taiwan_cain_2nd` schemas already in place (this tool does not create them)
 - The RSA private key (PEM) matching the game server
 
-## Install
+## Install (local development)
 
 ```bash
+git clone <repo> && cd open-dfo-login
 bun install
 ```
-
-## Usage
-
-```bash
-bun index.ts init      # configure DB connection + paste RSA private key
-bun index.ts signup    # register a new account
-bun index.ts login     # log in, print the game token, cache it
-bun index.ts lookup    # list cached account names
-bun index.ts lookup <name>   # print the cached token for <name>
-bun index.ts help
-```
-
-Running `bun index.ts` with no subcommand auto-enters `init` when `db_config.json` is missing, and prints the help text otherwise.
 
 ## Commands
 
