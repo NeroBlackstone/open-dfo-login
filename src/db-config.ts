@@ -1,10 +1,6 @@
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import {
-	existsSync,
-	mkdirSync,
-	readFileSync,
-	writeFileSync,
-} from "node:fs";
-import {
+	BACKUPS_DIR,
 	CONFIG_DIR,
 	CONFIG_PATH,
 	DEFAULT_DB_CONFIG,
@@ -72,9 +68,19 @@ export function saveDbConfig(config: DatabaseConfig): void {
 	writeFileSync(CONFIG_PATH, JSON.stringify(config, null, "\t"), "utf-8");
 }
 
+/** 通用:确保 dir 存在;若已存在则跳过。recursive:true 允许多级目录。 */
+export function ensureDir(dir: string): void {
+	if (!existsSync(dir)) {
+		mkdirSync(dir, { recursive: true });
+	}
+}
+
 /** 确保配置目录存在,存在则不创建。多次出现 mkdirSync(recursive:true) 的统一入口。 */
 export function ensureConfigDir(): void {
-	if (!existsSync(CONFIG_DIR)) {
-		mkdirSync(CONFIG_DIR, { recursive: true });
-	}
+	ensureDir(CONFIG_DIR);
+}
+
+/** 确保备份目录 ~/.dfo-login/backups/ 存在。 */
+export function ensureBackupsDir(): void {
+	ensureDir(BACKUPS_DIR);
 }

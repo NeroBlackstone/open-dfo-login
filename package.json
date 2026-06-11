@@ -13,7 +13,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"mysql2": "^3.22.4"
+		"mysql2": "^3.22.5"
 	},
 	"files": [
 		"index.ts",

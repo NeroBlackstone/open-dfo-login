@@ -1,6 +1,29 @@
-import { chmodSync, existsSync, readFileSync, writeFileSync } from "node:fs";
-import { PRIVATE_KEY_PATH, TOKENS_PATH } from "./constants.ts";
-import { ensureConfigDir } from "./db-config.ts";
+import {
+	chmodSync,
+	existsSync,
+	readdirSync,
+	readFileSync,
+	statSync,
+	writeFileSync,
+} from "node:fs";
+import { basename, dirname, join } from "node:path";
+import { BACKUPS_DIR, PRIVATE_KEY_PATH, TOKENS_PATH } from "./constants.ts";
+import { ensureConfigDir, ensureDir } from "./db-config.ts";
+import type { BackupManifest } from "./types.ts";
+
+/**
+ * listBackups 扫描结果中每一条:文件元信息 + 解析后的 manifest(若成功)。
+ * 损坏/JSON 解析失败的文件 manifest 为 null 并填充 error 字段,
+ * 不会向上抛错,让 CLI 友好地继续展示其它有效备份。
+ */
+export interface BackupListEntry {
+	filePath: string;
+	fileName: string;
+	sizeBytes: number;
+	mtime: Date;
+	manifest: BackupManifest | null;
+	error: string | null;
+}
 
 /**
  * 从 ~/.dfo-login/tokens.json 加载 (accountName -> token) 映射。
@@ -69,4 +92,63 @@ export function hasPrivateKey(): boolean {
 		existsSync(PRIVATE_KEY_PATH) &&
 		readFileSync(PRIVATE_KEY_PATH, "utf-8").trim().length > 0
 	);
+}
+
+/**
+ * 把 payload 写入备份文件。
+ * 沿用 saveTokenMap 风格 (无 chmod) —— 备份内容是 inventory/skill/quest 等游戏内业务数据,
+ * 不含密码/token/私钥等凭据。filePath 的父目录会被自动创建,
+ * 这样 restore 命令未来直接复用此函数时不依赖特定目录。
+ */
+export function saveBackup(filePath: string, payload: unknown): void {
+	ensureDir(dirname(filePath));
+	writeFileSync(filePath, JSON.stringify(payload, null, "\t"), "utf-8");
+}
+
+/**
+ * 扫描 dir 下所有 *.json 备份,逐个读取并尝试解析 manifest。
+ * 目录不存在时返回空数组;读取或解析失败的文件不抛错,而是以
+ * { manifest: null, error: "<message>" } 的形式回填,让 CLI 决定如何提示。
+ * 返回顺序按文件名字典序(由调用方按 mtime 排序)。
+ */
+export function listBackups(dir: string = BACKUPS_DIR): BackupListEntry[] {
+	if (!existsSync(dir)) return [];
+	const out: BackupListEntry[] = [];
+	for (const entryName of readdirSync(dir)) {
+		if (!entryName.endsWith(".json")) continue;
+		const filePath = join(dir, entryName);
+		const stat = statSync(filePath);
+		if (!stat.isFile()) continue;
+
+		const base: BackupListEntry = {
+			filePath,
+			fileName: basename(filePath),
+			sizeBytes: stat.size,
+			mtime: stat.mtime,
+			manifest: null,
+			error: null,
+		};
+
+		try {
+			const raw = readFileSync(filePath, "utf-8");
+			const payload = JSON.parse(raw) as { manifest?: unknown };
+			if (
+				payload &&
+				typeof payload === "object" &&
+				(payload as { manifest?: unknown }).manifest &&
+				typeof (payload as { manifest: { schema_version?: unknown } }).manifest
+					.schema_version === "number" &&
+				(payload as { manifest: { schema_version: number } }).manifest
+					.schema_version === 1
+			) {
+				base.manifest = (payload as { manifest: BackupManifest }).manifest;
+			} else {
+				base.error = "manifest 缺失或 schema_version 不为 1";
+			}
+		} catch (err) {
+			base.error = err instanceof Error ? err.message : String(err);
+		}
+		out.push(base);
+	}
+	return out;
 }

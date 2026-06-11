@@ -2,7 +2,28 @@
   "permissions": {
     "allow": [
       "Bash(npm whoami *)",
-      "Bash(npm config *)"
+      "Bash(npm config *)",
+      "Bash(bun x *)",
+      "Bash(awk 'NR==13' /home/gaowanxiang/Documents/code/open-dfo-login/src/auth.ts)",
+      "Bash(python3 /tmp/fix_regex.py)",
+      "Bash(awk 'NR==13' src/auth.ts)",
+      "Bash(echo \"---exit $?---\")",
+      "Bash(ls -la ~/.dfo-login/ 2>&1 | head -20; echo '---'; which mysql mysqldump 2>&1)",
+      "Bash(bun -e ' *)",
+      "Bash(bun /tmp/research.ts)",
+      "Bash(bun /tmp/list_chars.ts)",
+      "Bash(bun /tmp/find_bridge.ts)",
+      "Bash(bun /tmp/charac_info.ts)",
+      "Bash(cat ~/.dfo-login/db_config.json)",
+      "Bash(npx tsc *)",
+      "Bash(mysql -h 127.0.0.1 -P 3000 -u root -p88888888 -e \"SELECT m_id, user_id, state FROM d_taiwan.member_info_utf8 ORDER BY m_id\")",
+      "Bash(timeout 10 bun -e ' *)",
+      "Bash(timeout 15 bun -e ' *)",
+      "Bash(timeout 30 bun -e ' *)",
+      "Bash(ls ~/.dfo-login/backups/ | grep testuser0_test1_20260612)",
+      "Bash(mysql -h 127.0.0.1 -P 3000 -u root -p88888888 -e ' *)",
+      "Bash(bun --version)",
+      "Bash(bun run *)"
     ]
   }
 }

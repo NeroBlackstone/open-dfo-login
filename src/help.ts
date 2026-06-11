@@ -14,6 +14,16 @@ export function printHelp(): void {
 	console.log(
 		"  lookup      [账户名] 查询已记录的 token。无参时列出所有账户名",
 	);
+	console.log("  list-character <账户名> 查询指定账号下的所有角色概要信息");
+	console.log(
+		"  list-backup [账户名] 列出 ~/.dfo-login/backups/ 下的所有备份文件及元信息",
+	);
+	console.log(
+		"  backup     <账户名> <角色名> 备份指定角色所有表数据到 ~/.dfo-login/backups/",
+	);
+	console.log(
+		"  restore <账户名> <备份文件> 将备份 JSON 恢复到指定账号(分配新 charac_no)",
+	);
 	console.log("  help        显示帮助信息");
 	console.log("");
 	console.log(

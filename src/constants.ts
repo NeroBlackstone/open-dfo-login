@@ -11,6 +11,10 @@ export const CONFIG_DIR: string = join(homedir(), ".dfo-login");
 export const CONFIG_PATH: string = join(CONFIG_DIR, "db_config.json");
 export const PRIVATE_KEY_PATH: string = join(CONFIG_DIR, "private_key.pem");
 export const TOKENS_PATH: string = join(CONFIG_DIR, "tokens.json");
+export const BACKUPS_DIR: string = join(CONFIG_DIR, "backups");
+
+// 工具版本号,与 package.json#version 同步
+export const TOOL_VERSION: string = "0.1.0";
 
 // 默认数据库配置 (配置文件不存在时使用)
 export const DEFAULT_DB_CONFIG: DatabaseConfig = {

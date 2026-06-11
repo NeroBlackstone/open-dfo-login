@@ -1,6 +1,10 @@
+import { backupCommand } from "./commands/backup.ts";
 import { initCommand } from "./commands/init.ts";
+import { listBackupCommand } from "./commands/list-backup.ts";
+import { listCharacterCommand } from "./commands/list-character.ts";
 import { loginCommand } from "./commands/login.ts";
 import { lookupCommand } from "./commands/lookup.ts";
+import { restoreCommand } from "./commands/restore.ts";
 import { signupCommand } from "./commands/signup.ts";
 import { hasConfigFile } from "./db-config.ts";
 import { printHelp } from "./help.ts";
@@ -22,6 +26,18 @@ export async function main(argv: readonly string[]): Promise<number> {
 			return 0;
 		case "lookup":
 			await lookupCommand(argv.slice(3));
+			return 0;
+		case "list-character":
+			await listCharacterCommand(argv.slice(3));
+			return 0;
+		case "list-backup":
+			await listBackupCommand(argv.slice(3));
+			return 0;
+		case "backup":
+			await backupCommand(argv.slice(3));
+			return 0;
+		case "restore":
+			await restoreCommand(argv.slice(3));
 			return 0;
 		case "help":
 		case "-h":
