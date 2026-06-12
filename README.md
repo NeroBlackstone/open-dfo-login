@@ -17,6 +17,9 @@ bunx dfo-login list-character <name> # list all characters for <name>
 bunx dfo-login list-backup           # list all backups
 bunx dfo-login backup <account> <character> # backup a character to JSON
 bunx dfo-login restore <account> <file>     # restore a backup to <account>
+bunx dfo-login recharge-cera <name> <amount>       # add CERA (premium currency) to an account
+bunx dfo-login recharge-cera-point <name> <amount> # add CERA POINT to an account
+bunx dfo-login mail [character]     # send in-game mail (items) to a character
 ```
 
 Pin a specific version if you want reproducible behavior:
@@ -166,6 +169,8 @@ bun install
 | `list-character <name>` | List all characters (with summary: level, job, inventory item counts, etc.) for the given account |
 | `backup <account> <charac>` | Dump all character-level DB rows for the named character to a JSON file under `~/.dfo-login/backups/` |
 | `restore <target_account> <backup_file>` | Restore a backup JSON to the target account. Allocates a fresh `charac_no` (max+1) and rewrites `m_id` so the character is owned by the target account. All-or-nothing transaction |
+| `recharge-cera <name> <amount>` | Add CERA (premium currency) to the specified account. `amount` must be positive |
+| `recharge-cera-point <name> <amount>` | Add CERA POINT to the specified account. `amount` must be positive |
 | `help` | Print help |
 
 ## Files in `~/.dfo-login/`

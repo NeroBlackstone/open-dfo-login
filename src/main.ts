@@ -4,6 +4,9 @@ import { listBackupCommand } from "./commands/list-backup.ts";
 import { listCharacterCommand } from "./commands/list-character.ts";
 import { loginCommand } from "./commands/login.ts";
 import { lookupCommand } from "./commands/lookup.ts";
+import { mailCommand } from "./commands/mail.ts";
+import { rechargeCeraCommand } from "./commands/recharge-cera.ts";
+import { rechargeCeraPointCommand } from "./commands/recharge-cera-point.ts";
 import { restoreCommand } from "./commands/restore.ts";
 import { signupCommand } from "./commands/signup.ts";
 import { hasConfigFile } from "./db-config.ts";
@@ -38,6 +41,15 @@ export async function main(argv: readonly string[]): Promise<number> {
 			return 0;
 		case "restore":
 			await restoreCommand(argv.slice(3));
+			return 0;
+		case "recharge-cera":
+			await rechargeCeraCommand(argv.slice(3));
+			return 0;
+		case "recharge-cera-point":
+			await rechargeCeraPointCommand(argv.slice(3));
+			return 0;
+		case "mail":
+			await mailCommand(argv.slice(3));
 			return 0;
 		case "help":
 		case "-h":

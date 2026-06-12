@@ -24,6 +24,15 @@ export function printHelp(): void {
 	console.log(
 		"  restore <账户名> <备份文件> 将备份 JSON 恢复到指定账号(分配新 charac_no)",
 	);
+	console.log(
+		"  recharge-cera <账户名> <金额> 给指定账户充值点券(cera)",
+	);
+	console.log(
+		"  recharge-cera-point <账户名> <金额> 给指定账户充值代币(cera_point)",
+	);
+	console.log(
+		"  mail [角色名] 向指定角色发送游戏内邮件(物品),交互式添加多个物品",
+	);
 	console.log("  help        显示帮助信息");
 	console.log("");
 	console.log(
