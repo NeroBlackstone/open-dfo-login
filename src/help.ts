@@ -33,6 +33,12 @@ export function printHelp(): void {
 	console.log(
 		"  mail [角色名] 向指定角色发送游戏内邮件(物品),交互式添加多个物品",
 	);
+	console.log(
+		"  complete-quest <角色名> --quest <id>... 完成指定任务",
+	);
+	console.log(
+		"  complete-quest <角色名> --all          完成所有进行中的任务",
+	);
 	console.log("  help        显示帮助信息");
 	console.log("");
 	console.log(

@@ -20,6 +20,8 @@ bunx dfo-login restore <account> <file>     # restore a backup to <account>
 bunx dfo-login recharge-cera <name> <amount>       # add CERA (premium currency) to an account
 bunx dfo-login recharge-cera-point <name> <amount> # add CERA POINT to an account
 bunx dfo-login mail [character]     # send in-game mail (items) to a character
+bunx dfo-login complete-quest <character> --quest <id>...  # complete specific quests
+bunx dfo-login complete-quest <character> --all            # complete all in-progress quests
 ```
 
 Pin a specific version if you want reproducible behavior:
@@ -171,6 +173,9 @@ bun install
 | `restore <target_account> <backup_file>` | Restore a backup JSON to the target account. Allocates a fresh `charac_no` (max+1) and rewrites `m_id` so the character is owned by the target account. All-or-nothing transaction |
 | `recharge-cera <name> <amount>` | Add CERA (premium currency) to the specified account. `amount` must be positive |
 | `recharge-cera-point <name> <amount>` | Add CERA POINT to the specified account. `amount` must be positive |
+| `mail [character]` | Send in-game mail (items) to a character. Interactive item selection |
+| `complete-quest <charac> --quest <id>...` | Complete specific quests for a character. Supports `--items` for auto-granting quest items ([format](docs/quest-items.md)) |
+| `complete-quest <charac> --all` | Complete all in-progress quests for a character |
 | `help` | Print help |
 
 ## Files in `~/.dfo-login/`

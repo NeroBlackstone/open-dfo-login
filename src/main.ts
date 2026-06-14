@@ -1,4 +1,5 @@
 import { backupCommand } from "./commands/backup.ts";
+import { completeQuestCommand } from "./commands/complete-quest.ts";
 import { initCommand } from "./commands/init.ts";
 import { listBackupCommand } from "./commands/list-backup.ts";
 import { listCharacterCommand } from "./commands/list-character.ts";
@@ -47,6 +48,9 @@ export async function main(argv: readonly string[]): Promise<number> {
 			return 0;
 		case "recharge-cera-point":
 			await rechargeCeraPointCommand(argv.slice(3));
+			return 0;
+		case "complete-quest":
+			await completeQuestCommand(argv.slice(3));
 			return 0;
 		case "mail":
 			await mailCommand(argv.slice(3));
