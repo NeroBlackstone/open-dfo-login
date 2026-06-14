@@ -1,5 +1,7 @@
 # dfo-login
 
+[中文文档](README.zh.md)
+
 A [Bun](https://bun.com)-powered CLI for managing accounts on a private DFO server: configure the database, register accounts, log in, and produce a game-client login token.
 
 ## Quick start (no install)
